@@ -1,0 +1,36 @@
+//
+// Theme style
+//
+
+// Initialize
+@import 'init';
+
+// Components
+@import './core/components/components';
+@import 'components/components';
+
+// Layout
+@import './core/layout/base/layout';
+@import 'layout/layout';
+
+// Pages
+//  for page-item active ineer div
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #d81923;
+  border-color: #d81923;
+}
+
+.card-body-custom {
+  //   extend .card-body
+  //   @extend .card-body;
+  //   background: gold !important;
+  //   color: #fff;
+  height: 480px;
+  //   height: 90% !important;
+  overflow-y: auto;
+
+  //   max-height: 490px;
+  //   overflow-y: auto;
+}

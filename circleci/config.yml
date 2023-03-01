@@ -1,0 +1,45 @@
+version: 2.3
+
+#  deploy  in docker container node:alpine
+jobs:
+  deploy:
+    docker:
+      - image: node:alpine
+    steps:
+      - checkout
+      # restore cache
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      # install dependencies
+      - run:
+          name: Install dependencies
+          command: npm install
+      # save cache
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      # format and lint for  css
+      - run:
+          name: Format the ts and tsx files and scss files
+          command: npm run format:css && npm run lint:css
+      #  format  and  lint  js
+      - run:
+          name: Format the ts and tsx files and scss files
+          command: npm run format:js && npm run lint:js
+      # test and build
+      - run:
+          name: Test
+          command: npm run test
+      # build
+      - run:
+          name: Build into Netlify or Github Pages or the  vercel
+          command: npm run build
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deploy
